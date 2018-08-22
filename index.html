@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>添加学生信息系统</title>
+	<style type="text/css">
+		#part{
+			margin: 0 auto;
+			width:60%;
+			text-align: center;
+		}
+		fieldset{
+			border:2px solid red;
+		}	
+		fieldset div{
+			text-align: left;
+			margin: 10px auto;
+		}
+		fieldset div input,#part div select{
+			margin-left: 36px;
+		}
+		fieldset div:nth-last-child(2) input{
+			margin-left: 20px;
+		}
+		fieldset div:last-child{
+			text-align: left;
+		}
+		fieldset div:last-child input{
+			background: orange;
+			outline: none;
+			border-radius: 6px;
+			padding: 5px;
+			margin-left: 0px;
+		}
+		table{
+			width:575px;
+			margin: 10px auto;
+		}
+		table td{
+			width:20%;
+			padding:5px 0;
+		}
+		table td button{
+			background: red;
+			outline: none;
+			border-radius: 5px;
+		}
+	</style>
+	<script src="vue.js"></script>
+</head>
+<body>
+	<div id="part">
+		<fieldset>
+			<legend>学生信息</legend>
+			<div>姓名：<input v-model="newPerson.name"></div>
+			<div>性别：<select v-model="newPerson.sex">
+						<option value="男" selected="selected">男</option>
+						<option value="女">女</option>
+				</select>
+			</div>
+			<div>年龄：<input v-model="newPerson.age"></div>
+			<div>手机号：<input type="" v-model="newPerson.phone"></div>
+			<div><input type="button" v-on:click="add()" value="添加用户信息"></div>
+		</fieldset>
+		<table border="1"  cellspacing="0">
+			<tr>
+				<th>姓名</th>
+				<th>性别</th>
+				<th>年龄</th>
+				<th>手机号</th>
+				<th>操作</th>
+			</tr>
+			<tr v-for="(p,index) in people">
+				<td>{{p.name}}</td>
+				<td>{{p.sex}}</td>
+				<td>{{p.age}}</td>
+				<td>{{p.phone}}</td>
+				<td><button @click="cancel(index)">删除</button></td>
+			</tr>
+		</table>
+	</div>
+</body>
+<script>
+new Vue({
+	el:"#part",
+	data:{
+		people:[
+			{name:"张姗",sex:"女",age:20,phone:18727881876},
+			{name:"李四",sex:"男",age:20,phone:18727651875},
+			{name:"王五",sex:"男",age:20,phone:13266535672},
+			{name:"赵柳",sex:"女",age:20,phone:13265548741},
+		],
+		newPerson:{name:"",sex:"男",age:15,phone:""}
+	},
+	methods:{
+		add:function(){
+			var user=this.newPerson.name.trim();//去除前后的空格
+			var re = /^1\d{10}$/;//验证手机号
+			if(!user.match(/^[\u4e00-\u9fa5]{2,6}$/)){
+				alert("请输入正确的姓名");//限制输入2~6个汉字
+			}else if(this.newPerson.age<15||this.newPerson.age>30){
+				alert('请输入合适的年龄')
+			}else if(!re.test(this.newPerson.phone)){
+				alert("请输入正确的手机号码")
+			}else{
+				//添加一条信息
+				this.people.unshift(this.newPerson);
+				//清空数据
+				this.newPerson={name:"",sex:"男",age:15,phone:""};
+			}
+		},
+		cancel:function(index){
+			this.people.splice(index,1);//删除一条信息
+		}
+	}
+})
+</script>
+</html>
