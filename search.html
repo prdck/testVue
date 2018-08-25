@@ -8,21 +8,28 @@
 			margin:0 ;
 			padding: 0;
 		}
+		.search{
+			text-align: center;
+			margin:10px 0;
+		}
 		ul{
-			margin-left: 50px;
+			margin: 0 auto;
 			list-style: none;
-			width:300px;
+			width:355px;
 			border:1px solid black;
 			display: none;
 		}
 		input{
-			margin-left: 50px;
 			outline: none;
 			border:1px solid black;
 			width:300px;
 			height: 40px;
 			line-height: 40px;
 			font-size:20px;
+			text-indent:5px;
+		}
+		input:hover{
+			box-shadow:0px 0px  2px 1px #aaa;
 		}
 		li a{
 			text-decoration: none;
@@ -35,10 +42,16 @@
 			color: white;
 		}
 		img{
+			margin-left: 8px;
 			width:42px;
 			height: 42px;
 			border-radius: 50%;
 			vertical-align: middle;
+			filter: grayscale(100%); 
+		}
+		img:hover{
+			filter: grayscale(0); 
+			cursor: pointer;
 		}
 	</style>
 	<script>
@@ -60,25 +73,31 @@
 			var oUl=document.getElementById("oul");
 			var searchImg=document.getElementById("searchImg");
 			txt.oninput=function(){
-				if(this.value!=""){
-					var inputValue=this.value;
+				if(this.value.trim() == ""){
+					oUl.style.display="none";
+					searchImg.onclick=function(){
+						window.open("https://prdck.github.io/search","_self")
+					}
+				}else{
 					var oScript=document.createElement("script");
-					oScript.src="https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd="+inputValue+"&cb=baidu";
+					oScript.src="https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd="+this.value+"&cb=baidu";
 					document.body.appendChild(oScript);
 					searchImg.onclick=function(){
-					window.open("https://www.baidu.com/s?wd="+inputValue,"_self")
-			}
-				}else{
-					oUl.style.display="none";
+						window.open("https://www.baidu.com/s?wd="+txt.value,"_self")
+					}
 				}
 			}
 		}
 	</script>
-</he
+</head>
 <body>
-	<input type="text" id="txt">
-	<img src="imgs/起舞弄剑.png" id="searchImg">
-	<ul id="oul">
-	</ul>
+	<div class="search">
+		<span>
+			<input type="text" id="txt">
+			<img src="imgs/起舞弄剑.png" id="searchImg">
+		</span>
+		<ul id="oul">
+		</ul>
+	</div>	
 </body>
 </html>
