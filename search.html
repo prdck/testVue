@@ -34,6 +34,12 @@
 			background: deeppink;
 			color: white;
 		}
+		img{
+			width:42px;
+			height: 42px;
+			border-radius: 50%;
+			vertical-align: middle;
+		}
 	</style>
 	<script>
 		function baidu(data){
@@ -52,11 +58,16 @@
 		window.onload=function(){
 			var txt=document.getElementById("txt");
 			var oUl=document.getElementById("oul");
+			var searchImg=document.getElementById("searchImg");
 			txt.oninput=function(){
 				if(this.value!=""){
+					var inputValue=this.value;
 					var oScript=document.createElement("script");
-					oScript.src="https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd="+this.value+"&cb=baidu";
+					oScript.src="https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd="+inputValue+"&cb=baidu";
 					document.body.appendChild(oScript);
+					searchImg.onclick=function(){
+					window.open("https://www.baidu.com/s?wd="+inputValue,"_self")
+			}
 				}else{
 					oUl.style.display="none";
 				}
@@ -66,6 +77,7 @@
 </he
 <body>
 	<input type="text" id="txt">
+	<img src="imgs/起舞弄剑.png" id="searchImg">
 	<ul id="oul">
 	</ul>
 </body>
